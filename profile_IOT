@@ -1,0 +1,7 @@
+# oh-my-posh init pwsh --config "c:/users/ak48/documents/catppuccin_macchiato.omp.json" | invoke-expression
+
+function prompt {
+    $path = split-path (get-location) -leaf
+    write-host "🧭 $path" -foregroundcolor cyan -nonewline
+    return " ❯ "
+}
