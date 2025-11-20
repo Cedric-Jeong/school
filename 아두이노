@@ -1,0 +1,71 @@
+#include <Servo.h>
+
+const int BTN_HORN = 2;
+const int BTN_ACCEL = 3;
+const int BTN_BREAK = 4;
+const int Level_Led = 5;
+const int Cracktion = 8;
+const int Potentiometer = A0;
+const int Wiper = 9;
+
+int tones = 800;
+int count = 0;
+int Level = 0;
+
+int BTN_ACCEL_State;
+int BTN_ACCEL_Last = LOW;
+
+int BTN_BREAK_State;
+int BTN_BREAK_Last = LOW;
+
+int Potentiometer_Value = 0;
+
+Servo servo;
+
+void setup(){
+  servo.attach(Wiper);
+  pinMode(BTN_HORN, INPUT); 
+  pinMode(BTN_ACCEL, INPUT); 
+  Serial.begin(115200);
+}
+
+void loop(){
+  // 1번
+  //Serial.println(digitalRead(BTN_HORN));
+  if(digitalRead(BTN_HORN) == HIGH){
+    tone(Cracktion, tones);
+    delay(300);
+    noTone(Cracktion);
+  }
+  // 2번
+  //Serial.println(digitalRead(BTN_ACCEL));
+  BTN_ACCEL_State = digitalRead(BTN_ACCEL);
+  if(BTN_ACCEL_State == HIGH && BTN_ACCEL_Last == LOW){
+    if(count < 4){
+      count++;
+    }
+    Serial.print("Level = ");
+    Serial.println(count);
+    Serial.println(Level);
+    delay(50);
+  }
+  BTN_ACCEL_Last = BTN_ACCEL_State;
+  Level = map(count, -1, 3, 0, 255);
+  analogWrite(Level_Led, Level);
+  // 3번
+  //Serial.println(digitalRead(BTN_BREAK));
+  BTN_BREAK_State = digitalRead(BTN_BREAK);
+  if(BTN_BREAK_State == HIGH && BTN_BREAK_Last == LOW){
+    count = 1;
+    Level = map(count, -1, 3, 0, 255);
+    Serial.print("Level = ");
+    Serial.println(count);
+    Serial.println(Level);
+    delay(50);
+  }
+  BTN_BREAK_Last = BTN_BREAK_State;
+  //4번
+  //Serial.println(Potentiometer_Value);
+  Potentiometer_Value = analogRead(Potentiometer);
+}
+
