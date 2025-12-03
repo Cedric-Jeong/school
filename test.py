@@ -29,6 +29,8 @@ def clickPrev() :
     name.config(text = fnameList[num])
     
 
+# test
+
 ## 메인 코드 부분
 window = Tk()
 window.geometry("700x500")
