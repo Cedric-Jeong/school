@@ -1,51 +1,30 @@
-from tkinter import *
-from time import *
+class Car():
+	color = ""
+	speed = 0
+	
+	def upSpeed(self, value):
+		self.speed += value
+	
+	def downSpeed(self, value):
+		self.speed -= value
 
-## 전역  변수 선언 부분 ## 
-fnameList = ["jeju1.gif", "jeju2.gif", "jeju3.gif", "jeju4.gif", "jeju5.gif", "jeju6.gif", "jeju7.gif", "jeju8.gif", "jeju9.gif"]
-photoList = [None] * 9
-num = 0
+myCar1 = Car() 
+myCar1.color = "빨강" 
+myCar1.speed = 0
 
-## 함수 선언 부분 ## 
-def clickNext() :
-    global num
-    num += 1
-    if num > 8 :
-        num = 0
-    photo = PhotoImage(file = "gif/" + fnameList[num])
-    pLabel.configure(image = photo)
-    pLabel.image = photo
-    name.config(text = fnameList[num])
+myCar2 = Car() 
+myCar2.color = "파랑" 
+myCar2.speed = 0
 
-    
-def clickPrev() :
-    global num
-    num -= 1
-    if num < 0 :
-        num = 8
-    photo = PhotoImage(file = "gif/" + fnameList[num])
-    pLabel.configure(image = photo)
-    pLabel.image=photo
-    name.config(text = fnameList[num])
-    
+myCar3 = Car() 
+myCar3.color = "노랑" 
+myCar3.speed = 0
 
-# test
+myCar1.upSpeed(30)
+print("자동차1의 색상은 %s이며, 현재 속도는 %dkm입니다.", myCar1.color, myCar1.speed)
 
-## 메인 코드 부분
-window = Tk()
-window.geometry("700x500")
-window.title("사진 앨범 보기")
+myCar2.downSpeed(60)
+print("자동차2의 색상은 %s이며, 현재 속도는 %dkm입니다.", myCar2.color, myCar2.speed)
 
-btnPrev = Button(window, text = "<< 이전", command = clickPrev)
-name = Label(window, text = fnameList[num])
-btnNext = Button(window, text = "다음 >>", command = clickNext)
-
-photo = PhotoImage(file = "gif/" + fnameList[0])
-pLabel = Label(window, image = photo)  
-
-btnPrev.place(x = 250, y = 10)
-name.place(x = 325, y = 10)
-btnNext.place(x = 400, y = 10)
-pLabel.place(x = 15, y = 50)
-
-window.mainloop()
+myCar3.downSpeed(0)
+print("자동차3의 색상은 %s이며, 현재 속도는 %dkm입니다.", myCar3.color, myCar3.speed)
